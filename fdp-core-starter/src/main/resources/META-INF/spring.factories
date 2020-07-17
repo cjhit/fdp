@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.github.cjhit.fdp.core.autoconfigure.FdpCoreAutoConfiguration
