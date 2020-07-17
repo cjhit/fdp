@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.fdp</groupId>
+  <groupId>com.github.cjhit</groupId>
   <artifactId>fdp</artifactId>
   <version>1.0.0-snapshot</version>
   <packaging>pom</packaging>
@@ -58,17 +58,99 @@
     </plugins>
   </build>
 
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <url>https://github.com/cjhit/fdp</url>
+    <connection>https://github.com/cjhit/fdp.git</connection>
+    <developerConnection>https://github.com/cjhit/fdp</developerConnection>
+  </scm>
+
+  <developers>
+    <developer>
+      <name>shuige</name>
+      <email>1295426871@qq.com</email>
+      <url>https://github.com/cjhit/fdp</url>
+    </developer>
+  </developers>
+
+
   <distributionManagement>
-    <repository>
-      <id>yirong-release</id>
-      <name>Project Release Repository</name>
-      <url>http://repo.citris.yr/repository/maven-releases/</url>
-    </repository>
     <snapshotRepository>
-      <id>yirong-snapshot</id>
-      <name>Project Snapshot Repository</name>
-      <url>http://repo.citris.yr/repository/maven-snapshots/</url>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+    </repository>
   </distributionManagement>
+
+
+  <profiles>
+    <!-- 发布到中央仓库 -->
+    <profile>
+      <id>release</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <!--          <plugin>-->
+          <!--            <groupId>org.apache.maven.plugins</groupId>-->
+          <!--            <artifactId>maven-javadoc-plugin</artifactId>-->
+          <!--            <version>3.1.1</version>-->
+          <!--            <executions>-->
+          <!--              <execution>-->
+          <!--                <id>attach-javadocs</id>-->
+          <!--                <goals>-->
+          <!--                  <goal>jar</goal>-->
+          <!--                </goals>-->
+          <!--              </execution>-->
+          <!--            </executions>-->
+          <!--          </plugin>-->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <!--            <configuration>-->
+            <!--              <skip>true</skip>-->
+            <!--            </configuration>-->
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 
 </project>
