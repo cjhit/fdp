@@ -32,11 +32,7 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
 
     private Class<?> clazz = null;
 
-    /**
-     * 获取实体类class
-     *
-     * @return
-     */
+
     public Class<?> getEntityClass() {
         if (clazz == null) {
             clazz = (Class<?>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -45,24 +41,19 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
     }
 
 
-    /**
-     * 根据主键获取记录
-     *
-     * @param id
-     * @return
-     */
     public T getById(ID id) {
         return dao.selectByPrimaryKey(id);
     }
 
 
     /**
-     * 根据属性值列表获取列表
+     * 根据单一属性以及属性值集合查询数据列表
      *
-     * @param valList
-     * @return
+     * @param prop    属性
+     * @param valList 属性值结合
+     * @return 符合条件的列表
      */
-    public List<T> getListByPropVals(String prop, Collection<? extends Serializable> valList) {
+    public List<T> findListByPropVals(String prop, Collection<? extends Serializable> valList) {
         Class clz = getEntityClass();
         Example example = new Example(clz);
         Example.Criteria criteria = example.createCriteria();
@@ -72,13 +63,13 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
     }
 
     /**
-     * 根据某个属性值获取唯一的一条记录
+     * 查询单个
      *
-     * @param key
-     * @param val
-     * @return
+     * @param key 属性
+     * @param val 属性值
+     * @return 单条记录
      */
-    public T getOne(String key, Object val) {
+    public T selectOne(String key, Object val) {
         Example example = new Example(getEntityClass());
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo(key, val);
@@ -92,10 +83,12 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
         return null;
     }
 
+
     /**
-     * 查询所有数据
+     * 查询所有数据并根据指定的排序字段进行排序
      *
-     * @return
+     * @param entity 实体
+     * @return 所有记录
      */
     public List<T> findAll(T entity) {
         //有指定排序的采用指定的，否则采用实体类中注解设置的
@@ -114,10 +107,10 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
 
 
     /**
-     * 获取分页结果
+     * 查询分页结果
      *
-     * @param entity
-     * @return
+     * @param entity 查询结果
+     * @return 分页结果
      */
     public PageResult<T> findPageResult(T entity) {
         Example example = generateExample(entity);
@@ -132,8 +125,8 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
     /**
      * 查询分页列表
      *
-     * @param entity
-     * @return
+     * @param entity 查询实体
+     * @return 列表数据
      */
     public List<T> findPageList(T entity) {
         entity.setNeedPage(FdpConstants.YES);
@@ -143,8 +136,8 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
     /**
      * 查询列表（不分页）
      *
-     * @param entity
-     * @return
+     * @param entity 查询实体
+     * @return 列表数据
      */
     public List<T> findList(T entity) {
         entity.setNeedPage(FdpConstants.NO);
@@ -154,8 +147,8 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
     /**
      * 查询数据列表，同时支持分页/不分页
      *
-     * @param entity
-     * @return
+     * @param entity 查询实体
+     * @return 列表数据
      */
     private List<T> findListByEntity(T entity) {
         Example example = generateExample(entity);
@@ -173,23 +166,12 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
     }
 
 
-    /**
-     * 根据条件统计数据
-     *
-     * @param entity
-     * @return
-     */
     public int countByCondition(T entity) {
         Example example = generateExample(entity);
         return dao.selectCountByExample(example);
     }
 
-    /**
-     * 插入数据
-     *
-     * @param entity
-     * @return
-     */
+
     public void save(T entity) {
         dao.insert(entity);
     }
@@ -197,8 +179,7 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
     /**
      * 根据主键更新,属性不为null的值不会进行更新
      *
-     * @param entity
-     * @return
+     * @param entity 待更新的实体
      */
     public void update(T entity) {
         dao.updateByPrimaryKeySelective(entity);
@@ -208,7 +189,7 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
     /**
      * 根据主键更新实体全部字段
      *
-     * @param entity
+     * @param entity 待更新的实体
      */
     public void updateAll(T entity) {
         dao.updateByPrimaryKey(entity);
@@ -217,8 +198,7 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
     /**
      * 删除数据
      *
-     * @param id
-     * @return
+     * @param id 主键
      */
     public void delete(ID id) {
         dao.deleteByPrimaryKey(id);
@@ -239,8 +219,8 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
     /**
      * 根据example查询列表
      *
-     * @param example
-     * @return
+     * @param example example
+     * @return 列表
      */
     public List<T> selectByExample(Example example) {
         return dao.selectByExample(example);
@@ -249,8 +229,8 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
     /**
      * 根据example查询总数
      *
-     * @param example
-     * @return
+     * @param example example
+     * @return 总数
      */
     public int selectCountByExample(Example example) {
         return dao.selectCountByExample(example);
@@ -261,7 +241,7 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
      * 从实体对象中构建查询条件
      *
      * @param entity
-     * @return
+     * @return 查询实体
      */
     private Example generateExample(T entity) {
         //TODO 配合索引，调整顺序
@@ -337,9 +317,9 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
      * 拼凑多字段模糊查询的sql语句
      * 最终结果如：(nick_name like '%1%' or phone like '%1%' )
      *
-     * @param condition
-     * @param entity
-     * @return
+     * @param condition 条件
+     * @param entity    实体
+     * @return sql
      */
     private String getMultiLikeCondionSql(MultiLikeCondition condition, T entity) {
         List<String> sqlFragmentList = new ArrayList<>();

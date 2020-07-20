@@ -24,7 +24,6 @@ import java.util.UUID;
  * 说明：通用帮助类
  * 作者： 水哥
  * 创建时间：2020-04-24
- *
  */
 public class FdpUtil {
 
@@ -51,11 +50,11 @@ public class FdpUtil {
 
 
     /**
-     * 实体字段 =》 数据库字段
-     * 如： siteName => site_name
+     * 实体字段转换为数据库字段 如： siteName 转为 site_name
      *
-     * @param fieldName
-     * @return
+     * @param clz       实体
+     * @param fieldName 字段名称
+     * @return 数据库字段名
      */
     public static String entityFieldToDbField(Class clz, String fieldName) {
 
@@ -84,7 +83,7 @@ public class FdpUtil {
      *
      * @param field            字段
      * @param fieldName：实体字段名称
-     * @return
+     * @return 数据库字段名
      */
     public static String entityFieldToDbField(Field field, String fieldName) {
         Column anno = field.getAnnotation(Column.class);
@@ -107,8 +106,8 @@ public class FdpUtil {
     /**
      * 骆驼命名法转下划线
      *
-     * @param src
-     * @return
+     * @param src 原始字符串
+     * @return 转换后的字符串
      */
     private static String camelToUnderLiner(String src) {
         StringBuffer sb = new StringBuffer();
@@ -126,8 +125,8 @@ public class FdpUtil {
     /**
      * 获取指定类的所有字段列表
      *
-     * @param clz
-     * @return
+     * @param clz 类
+     * @return 字段列表
      */
     public static List<Field> getAllFieldList(Class clz) {
         //备注： 理论上应按照数据库中索引的顺序（即索引注解）排序字段，后续构建sql即可正常使用上索引字段
@@ -172,16 +171,17 @@ public class FdpUtil {
         }
     }
 
-    /*
+    /**
      * 是否是大写
+     *
+     * @param c 字符
+     * @return 判断结果
      */
     public static boolean isUpperCase(char c) {
         return c >= 65 && c <= 90;
     }
 
-    /*
-     * 是否是小写
-     */
+
     public static boolean isLowerCase(char c) {
         return c >= 97 && c <= 122;
     }
@@ -192,7 +192,7 @@ public class FdpUtil {
      *
      * @param obj:对象
      * @param attrName:属性名称
-     * @return
+     * @return 属性值
      */
     public static Object getObjPropVal(Object obj, String attrName) {
         Method getMethod;
@@ -214,10 +214,11 @@ public class FdpUtil {
         return null;
     }
 
+
     /**
      * 通过字段名称获取该字段对应的get方法名称
-     *
-     * @return
+     * @param fieldName 字段名称
+     * @return 方法名
      */
     public static String getGetMethodName(String fieldName) {
         String firstChar = fieldName.substring(0, 1);
@@ -239,8 +240,8 @@ public class FdpUtil {
     /**
      * 获取指定位数的数字验证码
      *
-     * @param len
-     * @return
+     * @param len 指定长度
+     * @return 验证码
      */
     public static String getNumCaptcha(int len) {
         StringBuffer sb = new StringBuffer();
@@ -260,12 +261,12 @@ public class FdpUtil {
 
     /**
      * 解析multipart协议，返回指定字段名称的文件列表
-     *
-     * @param request
-     * @param tmpPath:缓存文件存放路径
-     * @param formMap：表单map
-     * @param fileFieldName：上传文件字段名，如：avatarFile、videoFile等
-     * @return
+     * @param request http请求
+     * @param tmpPath 临时目录
+     * @param formMap 表单map
+     * @param fileFieldName 文件字段名
+     * @return 文件列表
+     * @throws FileUploadException 文件上传失败异常
      */
     public static List<FileItem> parseMultipartRequest(javax.servlet.http.HttpServletRequest request, String tmpPath, Map<String, String> formMap, String fileFieldName) throws FileUploadException {
         List<FileItem> fileList = new ArrayList<>();

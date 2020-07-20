@@ -18,18 +18,10 @@ import java.util.Map;
  * 说明：
  * 作者： 水哥
  * 创建时间：2019-03-22
- *
  */
 public abstract class BaseRestController<P extends PageBean, ID extends Serializable, DAO extends BaseDao<P>, S extends BaseService<P, ID, DAO>> {
 
 
-    /**
-     * 分页结果
-     *
-     * @param entity
-     * @return
-     * @throws Exception
-     */
     protected RestResult pageResult(@RequestBody P entity) {
         PageResult<P> pageResult = service.findPageResult(entity);
         return RestResultBuilder.success("pageResult", pageResult);
@@ -40,13 +32,7 @@ public abstract class BaseRestController<P extends PageBean, ID extends Serializ
         return RestResultBuilder.success("list", list);
     }
 
-    /**
-     * 新增或保存（此操作是幂等的）
-     *
-     * @param entity
-     * @return
-     * @throws Exception
-     */
+
     protected RestResult saveOrUpdate(P entity) {
         if (isPrimaryKeyEmpty(entity)) {
             service.save(entity);
@@ -68,12 +54,7 @@ public abstract class BaseRestController<P extends PageBean, ID extends Serializ
         return RestResultBuilder.success();
     }
 
-    /**
-     * 根据列表，构建ID-MAP
-     *
-     * @param list
-     * @return
-     */
+
     public Map<ID, P> genPrimaryKeyMap(List<P> list) {
         Map<ID, P> retMap = new HashMap<>();
         if (FdpUtil.isNotEmpty(list)) {
@@ -86,12 +67,6 @@ public abstract class BaseRestController<P extends PageBean, ID extends Serializ
     }
 
 
-    /**
-     * 判断主键是否为空（主键只会是string 或 long）
-     *
-     * @param entity
-     * @return
-     */
     protected boolean isPrimaryKeyEmpty(P entity) {
         ID id = getPrimaryKey(entity);
         if (id instanceof String) {
@@ -103,8 +78,8 @@ public abstract class BaseRestController<P extends PageBean, ID extends Serializ
     /**
      * 获取主键(通过反射取注解),子类中可重写以提高速度，避免反射
      *
-     * @param entity
-     * @return
+     * @param entity 实体
+     * @return 主键
      */
     protected ID getPrimaryKey(P entity) {
         List<Field> fields = FdpUtil.getAllFieldList(entity.getClass());

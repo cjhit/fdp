@@ -19,7 +19,6 @@ import java.util.List;
  * 说明： 框架底层全局异常处理(REST) 仅在配置文件中指明fdp.default.exception.handle = true时才生效
  * 作者： 水哥
  * 创建时间：2020-04-22
- *
  */
 @Slf4j
 @RestControllerAdvice
@@ -27,13 +26,6 @@ import java.util.List;
 @ConditionalOnProperty(prefix = "fdp.default.exception", name = "handle", havingValue = "true", matchIfMissing = false)
 public class FdpDefaultExceptionHandle {
 
-    /**
-     * 参数方法异常
-     *
-     * @param request
-     * @param e
-     * @return
-     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public Object methodArgumentNotValid(HttpServletRequest request, MethodArgumentNotValidException e) {

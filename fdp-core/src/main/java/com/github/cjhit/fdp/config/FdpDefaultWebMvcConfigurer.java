@@ -29,7 +29,7 @@ public class FdpDefaultWebMvcConfigurer extends WebMvcConfigurationSupport {
     /**
      * 跨域支持
      *
-     * @param registry
+     * @param registry 跨越注册器
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -43,7 +43,7 @@ public class FdpDefaultWebMvcConfigurer extends WebMvcConfigurationSupport {
     /**
      * 添加静态资源--过滤swagger-api (开源的在线API文档)
      *
-     * @param registry
+     * @param registry 资源注册器
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -81,7 +81,7 @@ public class FdpDefaultWebMvcConfigurer extends WebMvcConfigurationSupport {
     /**
      * 增加拦截器
      *
-     * @param registry
+     * @param registry 拦截注册器
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

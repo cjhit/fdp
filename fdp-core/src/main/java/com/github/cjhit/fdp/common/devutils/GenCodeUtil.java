@@ -38,16 +38,15 @@ public class GenCodeUtil {
 
     /**
      * 自动生成代码
-     * <p>
      * 定义：
      * className:完整路径名  如com.fdp.common.entity.sys.User
      * pageageName:包名  如com.fdp.common.entity.sys
      * simpleName: User
      * pageageName  + "." + simpleName = className
      *
-     * @param clz
-     * @param config
-     * @param <T>
+     * @param clz    实体
+     * @param config 配置
+     * @param <T>    实体
      */
     public static <T extends PageBean> void gen(Class<T> clz, GenCodeConfig config) {
         String entityClassName = clz.getName();
@@ -75,9 +74,9 @@ public class GenCodeUtil {
     /**
      * 根据实体编译后的路径获取实体源码路径
      *
-     * @param entityClassPath
-     * @param entityPackageName
-     * @return
+     * @param entityClassPath   实体路径
+     * @param entityPackageName 实体包名
+     * @return 实体源码路径
      */
     private static String getEntitySrcPath(String entityClassPath, String entityPackageName) {
         ///D:/gitPlace/fdp/fdp-example/target/test-classes/ 或 D:\gitPlace\fdp\fdp-example\target\classes/
@@ -95,16 +94,6 @@ public class GenCodeUtil {
         return srcPath;
     }
 
-    /**
-     * 构建service类
-     *
-     * @param config
-     * @param entitySimpleName
-     * @param entityPackageName
-     * @param entityClassName
-     * @param entitySrcPath
-     * @return
-     */
     private static <T extends PageBean> String genService(String idType, GenCodeConfig config, String entitySimpleName, String entityPackageName, String entityClassName, String entitySrcPath) {
 
         String key = "." + config.getEntityPackageName();
@@ -141,16 +130,6 @@ public class GenCodeUtil {
     }
 
 
-    /**
-     * 构建dao类
-     *
-     * @param config
-     * @param entitySimpleName
-     * @param entityPackageName
-     * @param entityClassName
-     * @param entitySrcPath
-     * @return
-     */
     private static String genDao(GenCodeConfig config, String entitySimpleName, String entityPackageName, String entityClassName, String entitySrcPath) {
         String key = "." + config.getEntityPackageName();
         int index = entityClassName.indexOf(key);
@@ -178,13 +157,6 @@ public class GenCodeUtil {
         return finalPath;
     }
 
-    /**
-     * 获取主键类型
-     *
-     * @param clz
-     * @param <T>
-     * @return
-     */
     private static <T extends PageBean> String getIdType(Class<T> clz) {
         List<Field> fieldList = FdpUtil.getAllFieldList(clz);
         for (Field field : fieldList) {

@@ -10,14 +10,13 @@ import java.util.List;
  * 说明： REST返回结果构造就
  * 作者： 水哥
  * 创建时间：2020-04-26
- *
  */
 public class RestResultBuilder {
 
     /**
      * 空结果
      *
-     * @return
+     * @return 结果
      */
     public static RestEmptyResult emptyResult() {
         return new RestEmptyResult();
@@ -26,7 +25,7 @@ public class RestResultBuilder {
     /**
      * 空结果（兼容旧代码）
      *
-     * @return
+     * @return 结果
      */
     public static RestResult success() {
         return new RestResult();
@@ -36,9 +35,9 @@ public class RestResultBuilder {
     /**
      * 返回实体结果
      *
-     * @param entity
-     * @param <T>
-     * @return
+     * @param entity 返回的实体
+     * @param <T>    实体类型
+     * @return 结果
      */
     public static <T> RestEntityResult<T> entityResult(T entity) {
         return new RestEntityResult<T>(entity);
@@ -47,9 +46,9 @@ public class RestResultBuilder {
     /**
      * 返回分页结果
      *
-     * @param pageResult
-     * @param <T>
-     * @return
+     * @param pageResult 分页结果
+     * @param <T>        实体类型
+     * @return 结果
      */
     public static <T> RestPageResult<T> pageResult(PageResult<T> pageResult) {
         return new RestPageResult<>(pageResult);
@@ -58,9 +57,9 @@ public class RestResultBuilder {
     /**
      * 返回列表结果
      *
-     * @param list
-     * @param <T>
-     * @return
+     * @param list 列表结果
+     * @param <T>  实体类型
+     * @return 结果
      */
     public static <T> RestListEntityResult<T> listResult(List<T> list) {
         return new RestListEntityResult<>(list);
@@ -69,8 +68,8 @@ public class RestResultBuilder {
     /**
      * 返回id结果
      *
-     * @param id
-     * @return
+     * @param id id
+     * @return 结果
      */
     public static RestIdResult idReSult(String id) {
         return new RestIdResult(new IdEntity(id));

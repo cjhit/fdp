@@ -5,10 +5,12 @@
 
   <groupId>com.github.cjhit</groupId>
   <artifactId>fdp</artifactId>
-  <version>1.0.0-snapshot</version>
+  <version>1.0.0</version>
   <packaging>pom</packaging>
   <name>fdp</name>
   <description>fdp</description>
+  <url>https://github.com/cjhit/fdp</url>
+
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,7 +21,6 @@
   <modules>
     <module>fdp-core</module>
     <module>fdp-core-starter</module>
-    <module>fdp-example-server</module>
   </modules>
 
   <dependencies>
@@ -116,6 +117,20 @@
               </execution>
             </executions>
           </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.1.1</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
