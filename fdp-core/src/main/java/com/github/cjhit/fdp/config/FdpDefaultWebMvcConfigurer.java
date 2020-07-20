@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,13 +20,18 @@ import java.util.List;
  * spring5+ 建议使用WebMvcConfigurationSupport
  * 作者： 水哥
  * 创建时间：2020-04-13
- *
  */
 @Slf4j
 @Configuration
-//@ConditionalOnExpression("${fdp.default.mvc.configurer:true}")
 @ConditionalOnProperty(prefix = "fdp.default.mvc", name = "configurer", havingValue = "true", matchIfMissing = false)
 public class FdpDefaultWebMvcConfigurer extends WebMvcConfigurationSupport {
+
+
+    @PostConstruct
+    private void init() {
+        log.info("采用FDP默认MVC配置：FdpDefaultWebMvcConfigurer");
+    }
+
     /**
      * 跨域支持
      *
@@ -47,11 +53,12 @@ public class FdpDefaultWebMvcConfigurer extends WebMvcConfigurationSupport {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        //registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/resources/")
                 .addResourceLocations("classpath:/static/")
                 .addResourceLocations("classpath:/public/");
+        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
         super.addResourceHandlers(registry);
     }
 
@@ -85,7 +92,6 @@ public class FdpDefaultWebMvcConfigurer extends WebMvcConfigurationSupport {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new FdpDefaultInterceptor()).addPathPatterns("/**");
     }
 
     @Override

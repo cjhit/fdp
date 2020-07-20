@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "auth.config")
+@ConfigurationProperties(prefix = "fdp.auth.config")
 public class FdpAuthConfig {
 
     private String[] token = {}; //需要进拦截器的集合列表
