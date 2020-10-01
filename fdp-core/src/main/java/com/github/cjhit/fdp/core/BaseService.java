@@ -144,6 +144,15 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
         return findListByEntity(entity);
     }
 
+    public T selectOne(T entity) {
+        List<T> list = findList(entity);
+        if (FdpUtil.isNotEmpty(list)) {
+            return list.get(0);
+        }
+        return null;
+    }
+
+
     /**
      * 查询数据列表，同时支持分页/不分页
      *
