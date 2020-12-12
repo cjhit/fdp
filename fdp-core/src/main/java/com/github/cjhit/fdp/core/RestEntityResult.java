@@ -10,7 +10,7 @@ import lombok.Data;
  * 创建时间：2020-06-18
  */
 @Data
-@ApiModel(value = "RestEntityResult(实体响应对象)")
+@ApiModel(value = "RestEntityResult")
 public class RestEntityResult<T> extends RestEmptyResult {
     private T data;
 

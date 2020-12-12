@@ -14,7 +14,7 @@ import lombok.Data;
  *
  */
 @Data
-@ApiModel(value = "RestResult(一般响应对象，业务数据在data中)")
+@ApiModel(value = "RestResult")
 public class RestResult extends RestEmptyResult {
     @ApiModelProperty(value = "业务数据JSON")
     private JSONObject data;

@@ -12,7 +12,7 @@ import java.util.List;
  * 创建时间：2020-06-18
  */
 @Data
-@ApiModel(value = "RestListEntityResult(查询列表数据响应对象)")
+@ApiModel(value = "RestListEntityResult")
 public class RestListEntityResult<T> extends RestEmptyResult {
     private List<T> data;
 

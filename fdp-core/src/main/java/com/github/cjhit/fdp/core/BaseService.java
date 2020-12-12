@@ -14,9 +14,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * 文件名：BaseService.java
@@ -60,27 +58,6 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
         criteria.andIn(prop, valList);
         PageHelper.clearPage();
         return dao.selectByExample(example);
-    }
-
-    /**
-     * 查询单个
-     *
-     * @param key 属性
-     * @param val 属性值
-     * @return 单条记录
-     */
-    public T selectOne(String key, Object val) {
-        Example example = new Example(getEntityClass());
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo(key, val);
-        List<T> list = dao.selectByExample(example);
-        if (null != list && list.size() > 1) {
-            throw new RuntimeException("record not unique.");
-        }
-        if (null != list && list.size() == 1) {
-            return list.get(0);
-        }
-        return null;
     }
 
 
@@ -144,12 +121,45 @@ public class BaseService<T extends PageBean, ID extends Serializable, D extends 
         return findListByEntity(entity);
     }
 
+    /**
+     * 查询单个
+     *
+     * @param key 属性
+     * @param val 属性值
+     * @return 单条记录
+     */
+    public T selectOne(String key, Object val) {
+        Example example = new Example(getEntityClass());
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo(key, val);
+        List<T> list = dao.selectByExample(example);
+        if (null != list && list.size() > 1) {
+            throw new RuntimeException("record not unique.");
+        }
+        if (null != list && list.size() == 1) {
+            return list.get(0);
+        }
+        return null;
+    }
+
+
     public T selectOne(T entity) {
         List<T> list = findList(entity);
         if (FdpUtil.isNotEmpty(list)) {
             return list.get(0);
         }
         return null;
+    }
+
+    public Map<String, T> getIdUserMapByIdSet(Set<String> idList) {
+        List<T> list = findListByPropVals("id", idList);
+        Map<String, T> idMap = new HashMap<>();
+        if (FdpUtil.isNotEmpty(list)) {
+            for (T obj : list) {
+                idMap.put(FdpUtil.getObjPropVal(obj, "id") + "", obj);
+            }
+        }
+        return idMap;
     }
 
 

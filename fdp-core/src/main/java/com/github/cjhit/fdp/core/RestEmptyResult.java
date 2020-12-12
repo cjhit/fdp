@@ -11,7 +11,7 @@ import lombok.Data;
  * 创建时间：2020-06-18
  */
 @Data
-@ApiModel(value = "RestEmptResult(空响应对象，仅返回code及msg，无其他业务数据)")
+@ApiModel(value = "RestEmptResult")
 public class RestEmptyResult {
     @ApiModelProperty(value = "响应码，200为成功", example = "200")
     protected Integer code = 200;//http code

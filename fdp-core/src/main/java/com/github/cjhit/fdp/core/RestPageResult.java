@@ -10,7 +10,7 @@ import lombok.Data;
  * 创建时间：2020-06-18
  */
 @Data
-@ApiModel(value = "RestPageResult(分页查询结果响应对象)")
+@ApiModel(value = "RestPageResult")
 public class RestPageResult<T> extends RestEmptyResult {
     private PageResult<T> data;
 

@@ -10,7 +10,7 @@ import lombok.Data;
  * 创建时间：2020-06-18
  */
 @Data
-@ApiModel(value = "RestIdResult(响应对象，返回新增后的实体的id)")
+@ApiModel(value = "RestIdResult")
 public class RestIdResult extends RestEmptyResult {
     private IdEntity data;
 
